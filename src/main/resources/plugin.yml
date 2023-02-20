@@ -1,0 +1,22 @@
+name: Fadro04
+version: '${project.version}'
+main: uebung.fadro04.Fadro04
+api-version: 1.19
+authors: [ Fadro04 ]
+description: Nur zur Uebung
+
+commands:
+  fly:
+    description: For flying on the server.
+    aliases: [flying]
+
+  gamemode:
+    description: For exchanging your Game mode.
+    aliases: [gm]
+
+  heal:
+    description: For healing a Player.
+    aliases: [healme]
+
+  flySpeed:
+    description: Set how fast you want to fly.
