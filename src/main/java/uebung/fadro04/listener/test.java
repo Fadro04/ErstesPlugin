@@ -13,7 +13,8 @@ public class test {
         String datei = "Claiming.db";
         String url = "jdbc:sqlite:" + datei;
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try {
+            Connection conn = DriverManager.getConnection(url);
             String sql = "Select player_id from Player";
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
