@@ -20,3 +20,6 @@ commands:
 
   flySpeed:
     description: Set how fast you want to fly.
+
+  kit:
+    description: Kits that contains Items.

@@ -7,14 +7,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import uebung.fadro04.IO;
 
 
 public class FlyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.RED + "You are not a Player!");
+            if (IO.isInstance(sender)) {
                 return true;
             }
             Player player = (Player) sender;
@@ -22,19 +22,20 @@ public class FlyCommand implements CommandExecutor {
         }
 
         if (args.length == 1) {
-            Player target = Bukkit.getPlayerExact(args[0]);
-            assert target != null;
-            setFly(target, !target.getAllowFlight());
+            if (IO.isPlayer(args[0])) {
+                Player target = Bukkit.getPlayerExact(args[0]);
+                setFly(target, !target.getAllowFlight());
+            }
         }
         return true;
     }
 
 
-    public void setFly(Player p, Boolean b) {
-        p.setAllowFlight(b);
-        p.setFlying(b);
-        if (b) {
-            p.sendMessage(ChatColor.GREEN + "You can now fly!");
-        } else p.sendMessage(ChatColor.RED + "You can now not fly anymore!");
+    public void setFly(Player player, Boolean isFly) {
+        player.setAllowFlight(isFly);
+        player.setFlying(isFly);
+        if (isFly) {
+            player.sendMessage(ChatColor.GREEN + "You can now fly!");
+        } else player.sendMessage(ChatColor.RED + "You can now not fly anymore!");
     }
 }

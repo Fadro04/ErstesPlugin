@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import uebung.fadro04.IO;
 
 public class FlySpeedCommand implements CommandExecutor {
     @Override
@@ -15,32 +16,33 @@ public class FlySpeedCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "You need to type in a number between 0 and 10");
             return true;
         } else if (args.length == 1) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.RED + "The Console can not fly!");
+            if (IO.isInstance(sender)) {
                 return true;
             }
-            Player p = (Player) sender;
-            setFlySpeed(p, args[0]);
+            Player player = (Player) sender;
+            setFlySpeed(player, args[0]);
         } else if (args.length == 2) {
-            Player t = Bukkit.getPlayerExact(args[0]);
-            setFlySpeed(t, args[1]);
+            if (IO.isPlayer(args[0])) {
+                Player target = Bukkit.getPlayerExact(args[0]);
+                setFlySpeed(target, args[1]);
+            }
         }
         return true;
     }
 
 
-    public void setFlySpeed(Player p, String arg) {
-        float f = Float.parseFloat(arg);
+    public void setFlySpeed(Player player, String playerName) {
+        float f = Float.parseFloat(playerName);
         if (f != 0 && f <= 10) {
             f = f / 10;
-            p.setFlySpeed(f);
-            p.sendMessage("FlySpeed set to " + arg);
+            player.setFlySpeed(f);
+            player.sendMessage("FlySpeed set to " + playerName);
         }
         if (f == 0) {
-            p.setFlySpeed(0);
+            player.setFlySpeed(0);
         }
         if (f > 10 || f < -10) {
-            p.sendMessage(ChatColor.RED + "The Maximum Flight Speed is 10");
+            player.sendMessage(ChatColor.RED + "The Maximum Flight Speed is 10");
         }
 
     }

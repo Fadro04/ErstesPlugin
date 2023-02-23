@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import uebung.fadro04.IO;
 
 public class GamemodeCommand implements CommandExecutor {
     @Override
@@ -17,36 +18,37 @@ public class GamemodeCommand implements CommandExecutor {
         }
 
         if (args.length == 1) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("The console can not change the game mode");
+            if (IO.isInstance(sender)) {
                 return true;
             }
-            Player p = (Player) sender;
-            setGamemode(p, args[0]);
+            Player player = (Player) sender;
+            setGamemode(player, args[0]);
         } else if (args.length == 2) {
-            Player t = Bukkit.getPlayerExact(args[1]);
-            setGamemode(t, args[0]);
+            if (IO.isPlayer(args[1])) {
+                Player target = Bukkit.getPlayerExact(args[1]);
+                setGamemode(target, args[0]);
+            }
         }
         return true;
     }
 
-    public void setGamemode(Player p, String arg) {
-        GameMode gm = GameMode.SURVIVAL;
-        switch (arg) {
+    public void setGamemode(Player player, String playerName) {
+        GameMode gameMode = GameMode.SURVIVAL;
+        switch (playerName) {
             case "Creative":
             case "1":
-                gm = GameMode.CREATIVE;
+                gameMode = GameMode.CREATIVE;
                 break;
             case "Spectator":
             case "2":
-                gm = GameMode.SPECTATOR;
+                gameMode = GameMode.SPECTATOR;
                 break;
             case "Adventure":
             case "3":
-                gm = GameMode.ADVENTURE;
+                gameMode = GameMode.ADVENTURE;
                 break;
         }
-        p.setGameMode(gm);
+        player.setGameMode(gameMode);
     }
 
 }

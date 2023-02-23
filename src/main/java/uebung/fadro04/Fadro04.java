@@ -3,13 +3,10 @@ package uebung.fadro04;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import uebung.fadro04.commands.*;
 import uebung.fadro04.listener.JoinListener;
 import uebung.fadro04.listener.PreventionListener;
 import uebung.fadro04.listener.QuitListener;
-import uebung.fadro04.commands.FlyCommand;
-import uebung.fadro04.commands.FlySpeedCommand;
-import uebung.fadro04.commands.GamemodeCommand;
-import uebung.fadro04.commands.HealCommand;
 
 import java.util.Objects;
 
@@ -35,6 +32,7 @@ public final class Fadro04 extends JavaPlugin {
         Objects.requireNonNull(Bukkit.getPluginCommand("gamemode")).setExecutor(new GamemodeCommand());
         Objects.requireNonNull(Bukkit.getPluginCommand("heal")).setExecutor(new HealCommand());
         Objects.requireNonNull(Bukkit.getPluginCommand("flySpeed")).setExecutor(new FlySpeedCommand());
+        Objects.requireNonNull(Bukkit.getPluginCommand("kit")).setExecutor(new KitCommand());
 
         //Listener
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
